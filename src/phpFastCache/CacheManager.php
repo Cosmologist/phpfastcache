@@ -65,101 +65,101 @@ class CacheManager
         /**
          * Specify if the item must provide detailed creation/modification dates
          */
-      'itemDetailedDate' => false,
+        'itemDetailedDate' => false,
 
         /**
          * Automatically attempt to fallback to temporary directory
          * if the cache fails to write on the specified directory
          */
-      'autoTmpFallback' => false,
+        'autoTmpFallback' => false,
 
         /**
          * Provide a secure file manipulation mechanism,
          * on intensive usage the performance can be affected.
          */
-      'secureFileManipulation' => false,
+        'secureFileManipulation' => false,
 
         /**
          * Ignore Symfony notice for Symfony project which
          * do not makes use of PhpFastCache's Symfony Bundle
          */
-      'ignoreSymfonyNotice' => false,
+        'ignoreSymfonyNotice' => false,
 
         /**
          * Default time-to-live in second
          */
-      'defaultTtl' => 900,
+        'defaultTtl' => 900,
 
         /**
          * Default key hash function
          * (md5 by default)
          */
-      'defaultKeyHashFunction' => '',
+        'defaultKeyHashFunction' => '',
 
         /**
          * The securityKey that will be used
          * to create sub-directory
          * (Files-based drivers only)
          */
-      'securityKey' => 'Auto',
+        'securityKey' => 'Auto',
 
         /**
          * Auto-generate .htaccess if it's missing
          * (Files-based drivers only)
          */
-      'htaccess' => true,
+        'htaccess' => true,
 
         /**
          * Default files chmod
          * 0777 recommended
          * (Files-based drivers only)
          */
-      'default_chmod' => 0777,
+        'default_chmod' => 0777,
 
         /**
          * The path where we will writecache files
          * default value if empty: sys_get_temp_dir()
          * (Files-based drivers only)
          */
-      'path' => '',
+        'path' => '',
 
         /**
          * Driver fallback in case of failure.
          * Caution, in case of failure an E_WARNING
          * error will always be raised
          */
-      'fallback' => false,
+        'fallback' => false,
 
         /**
          * Maximum size (bytes) of object store in memory
          * (Memcache(d) drivers only)
          */
-      'limited_memory_each_object' => 4096,
+        'limited_memory_each_object' => 4096,
 
         /**
          * Compress stored data, if the backend supports it
          * (Memcache(d) drivers only)
          */
-      'compress_data' => false,
+        'compress_data' => false,
 
         /**
          * Prevent cache slams when
          * making use of heavy cache
          * items
          */
-      'preventCacheSlams' => false,
+        'preventCacheSlams' => false,
 
         /**
          * Cache slams timeout
          * in seconds
          */
-      'cacheSlamsTimeout' => 15,
+        'cacheSlamsTimeout' => 15,
 
         /**
          * Cache slams timeout
          * in seconds
          */
-      'cacheFileExtension' => 'txt',
+        'cacheFileExtension' => 'txt',
 
     ];
 
@@ -169,10 +169,10 @@ class CacheManager
      * @var array
      */
     protected static $safeFileExtensions = [
-      'txt',
-      'cache',
-      'db',
-      'pfc',
+        'txt',
+        'cache',
+        'db',
+        'pfc',
     ];
 
     /**
@@ -211,7 +211,7 @@ class CacheManager
             $badPracticeOmeter[ $driver ] = 1;
             if (!$config[ 'ignoreSymfonyNotice' ] && interface_exists('Symfony\Component\HttpKernel\KernelInterface') && !class_exists('phpFastCache\Bundle\phpFastCacheBundle')) {
                 trigger_error('A Symfony Bundle to make the PhpFastCache integration more easier is now available here: https://github.com/PHPSocialNetwork/phpfastcache-bundle',
-                  E_USER_NOTICE);
+                    E_USER_NOTICE);
             }
             $class = self::getNamespacePath() . $driver . '\Driver';
             try {
@@ -226,7 +226,7 @@ class CacheManager
                             self::$instances[ $instance ] = new $class($config);
                             self::$instances[ $instance ]->setEventManager(EventManager::getInstance());
                             trigger_error(sprintf('The "%s" driver is unavailable at the moment, the fallback driver "%s" has been used instead.', $driver,
-                              $fallback), E_USER_WARNING);
+                                $fallback), E_USER_WARNING);
                         } else {
                             throw new phpFastCacheInvalidConfigurationException('The fallback driver cannot be the same than the default driver', 0, $e);
                         }
@@ -379,26 +379,26 @@ class CacheManager
     public static function getStaticSystemDrivers()
     {
         return [
-          'Apc',
-          'Apcu',
-          'Cassandra',
-          'Couchbase',
-          'Couchdb',
-          'Devnull',
-          'Files',
-          'Leveldb',
-          'Memcache',
-          'Memcached',
-          'Memstatic',
-          'Mongodb',
-          'Predis',
-          'Redis',
-          'Ssdb',
-          'Sqlite',
-          'Wincache',
-          'Xcache',
-          'Zenddisk',
-          'Zendshm',
+            'Apc',
+            'Apcu',
+            'Cassandra',
+            'Couchbase',
+            'Couchdb',
+            'Devnull',
+            'Files',
+            'Leveldb',
+            'Memcache',
+            'Memcached',
+            'Memstatic',
+            'Mongodb',
+            'Predis',
+            'Redis',
+            'Ssdb',
+            'Sqlite',
+            'Wincache',
+            'Xcache',
+            'Zenddisk',
+            'Zendshm',
         ];
     }
 
@@ -408,9 +408,9 @@ class CacheManager
     public static function getStaticAllDrivers()
     {
         return array_merge(self::getStaticSystemDrivers(), [
-          'Devtrue',
-          'Devfalse',
-          'Cookie',
+            'Devtrue',
+            'Devfalse',
+            'Cookie',
         ]);
     }
 
@@ -438,21 +438,11 @@ class CacheManager
         foreach ($config as $configName => $configValue) {
             switch ($configName) {
                 case 'itemDetailedDate':
-                    if (!is_bool($configValue)) {
-                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
-                    }
-                    break;
                 case 'autoTmpFallback':
-                    if (!is_bool($configValue)) {
-                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
-                    }
-                    break;
                 case 'secureFileManipulation':
-                    if (!is_bool($configValue)) {
-                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
-                    }
-                    break;
                 case 'ignoreSymfonyNotice':
+                case 'htaccess':
+                case 'compress_data':
                     if (!is_bool($configValue)) {
                         throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
                     }
@@ -468,38 +458,20 @@ class CacheManager
                     }
                     break;
                 case 'securityKey':
-                    if (!is_string($configValue)) {
-                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a string");
-                    }
-                    break;
-                case 'htaccess':
-                    if (!is_bool($configValue)) {
-                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
-                    }
-                    break;
-                case 'default_chmod':
-                    if (!is_int($configValue)) {
-                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be an integer");
-                    }
-                    break;
                 case 'path':
                     if (!is_string($configValue)) {
                         throw new phpFastCacheInvalidConfigurationException("{$configName} must be a string");
                     }
                     break;
-                case 'fallback':
-                    if (!is_bool($configValue) && !is_string($configValue)) {
-                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean or string");
-                    }
-                    break;
+                case 'default_chmod':
                 case 'limited_memory_each_object':
                     if (!is_int($configValue)) {
                         throw new phpFastCacheInvalidConfigurationException("{$configName} must be an integer");
                     }
                     break;
-                case 'compress_data':
-                    if (!is_bool($configValue)) {
-                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean");
+                case 'fallback':
+                    if (!is_bool($configValue) && !is_string($configValue)) {
+                        throw new phpFastCacheInvalidConfigurationException("{$configName} must be a boolean or string");
                     }
                     break;
                 case 'cacheFileExtension':
@@ -511,7 +483,7 @@ class CacheManager
                     }
                     if (!in_array($configValue, self::$safeFileExtensions)) {
                         throw new phpFastCacheInvalidConfigurationException(
-                          "{$configName} is not a safe extension, currently allowed extension: " . implode(', ', self::$safeFileExtensions)
+                            "{$configName} is not a safe extension, currently allowed extension: " . implode(', ', self::$safeFileExtensions)
                         );
                     }
                     break;
